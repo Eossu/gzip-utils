@@ -40,8 +40,6 @@ stages:
     parameters:
       PythonVersion: ${{ parameters.PythonVersion }}
       jobs:
-        py37:
-          os: linux
         py38:
           os: linux
 

@@ -3,12 +3,12 @@
 #
 try:
     from importlib.metadata import PackageNotFoundError, version
-except ImportError:
+except ImportError:  # pragma: no cover
     from importlib_metadata import PackageNotFoundError, version  # type: ignore
 
 try:
     __version__ = version(__package__)
-except PackageNotFoundError:
+except PackageNotFoundError:  # pragma: no cover
     __version__ = "0.0.0"
 
 

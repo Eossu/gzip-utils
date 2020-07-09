@@ -1,0 +1,49 @@
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: github
+      name: eossu/azure-pipelines-templates
+      ref: refs/heads/develop
+
+trigger:
+  tags:
+    include:
+      - 2*
+
+  branches:
+    include:
+      - develop
+      - feature/*
+      - bugfix/*
+      - hotfix/*
+      - refs/tags/*
+
+pr:
+  branches:
+    include:
+      - develop
+
+parameters:
+  - name: PythonVersion
+    type: string
+    default: "3.8"
+
+variables:
+  - name: POETRY_CACHE_DIR
+    value: $(Pipeline.Workspace)/.cache/pypoetry/cache
+  - group: poetry-config
+  - group: pypi-credentials
+
+stages:
+  - template: python/stages/test.yaml@templates
+    parameters:
+      PythonVersion: ${{ parameters.PythonVersion }}
+      jobs:
+        py38:
+          os: linux
+
+  - template: python/stages/publish.yaml@templates
+    parameters:
+      PythonVersion: ${{ parameters.PythonVersion }}
+      PypiToken: $(pypi-token)

@@ -32,7 +32,7 @@ variables:
   - group: pypi-credentials
 
 stages:
-  - template: python/stages/sdk-test.yaml@templates
+  - template: python/stages/test.yaml@templates
     parameters:
       PythonVersion: "3.8"
       jobs:

@@ -47,4 +47,5 @@ stages:
 
   - template: python/stages/publish.yaml@templates
     parameters:
+      PythonVersion: ${{ parameters.PythonVersion }}
       PypiToken: $(pypi-token)

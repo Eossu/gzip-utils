@@ -2,12 +2,9 @@
 #
 #
 import json
-import logging
-from io import BytesIO
-from typing import List, Union
 from gzip import GzipFile
-
-logger = logging.getLogger(__name__)
+from io import BytesIO
+from typing import MutableSequence, Union
 
 
 class CompressedJsonArray:
@@ -25,6 +22,10 @@ class CompressedJsonArray:
         self._compressed_size: int = 0
 
     @property
+    def max_compressed_size(self) -> int:
+        return self._max_compressed_size
+
+    @property
     def uncompressed_size(self) -> int:
         return self._uncompressed_size
 
@@ -34,9 +35,12 @@ class CompressedJsonArray:
 
     @property
     def compression_ratio(self) -> float:
-        return self.compressed_size / self.uncompressed_size * 100.0
+        ratio = 0.0
+        if self.uncompressed_size != 0:
+            ratio = self.compressed_size / self.uncompressed_size * 100.0
+        return ratio
 
-    def get_compressed_json_array(self, json_data: List[Union[str, dict]]) -> bytes:
+    def get_compressed_json_array(self, json_data: MutableSequence[Union[str, dict]]) -> bytes:
         """Get a compressed array of json objects
 
         Args:
@@ -46,44 +50,44 @@ class CompressedJsonArray:
             bytearray: The array of compressed bytes
         """
         compressed = None
-        unzipped_chars = 1
         gzip_metadata_size = 20
+        unzipped_chars = 1 + gzip_metadata_size
 
-        try:
-            byte_stream = BytesIO()
-            gzip_stream = GzipFile(mode="wb", fileobj=byte_stream)
+        byte_stream = BytesIO()
+        gzip_stream = GzipFile(mode="wb", fileobj=byte_stream)
 
-            gzip_stream.write(b'[')
-            data_written = 0
+        gzip_stream.write(b"[")
+        data_written = 0
 
-            for data in json_data:
-                if isinstance(data, dict):
-                    data = json.dumps(data)
+        for org_data in json_data:
+            if isinstance(org_data, dict):
+                data = json.dumps(org_data)
+            elif isinstance(org_data, str):
+                data = org_data
+            else:
+                raise ValueError(f"We do not support type: {type(org_data)}")
 
-                bytes = data.encode("utf-8")
+            bytes = data.encode("utf-8")
 
-                if (gzip_stream.size + len(bytes) + unzipped_chars + gzip_metadata_size) > self._max_compressed_size:  # type: ignore
-                    gzip_stream.flush()
-                    unzipped_chars = 0
+            if (gzip_stream.size + len(bytes) + unzipped_chars) > self._max_compressed_size:  # type: ignore
+                gzip_stream.flush()
+                unzipped_chars = 0 + gzip_metadata_size
 
-                if (gzip_stream.size + len(bytes) + gzip_metadata_size) >= self._max_compressed_size and data_written > 0:  # type: ignore
-                    break
+            if (gzip_stream.size + len(bytes)) >= self._max_compressed_size and data_written > 0:  # type: ignore
+                break
 
-                json_data.remove(data)
-                if data_written > 0:
-                    gzip_stream.write(b',')
-                gzip_stream.write(bytes)
+            json_data.remove(org_data)
+            if data_written > 0:
+                gzip_stream.write(b",")
+            gzip_stream.write(bytes)
+            data_written += 1
 
-                unzipped_chars += len(bytes)
-                self._uncompressed_size += len(bytes)
+            unzipped_chars += len(bytes)
+            self._uncompressed_size += len(bytes)
 
-            gzip_stream.write(b']')
-            gzip_stream.close()
-            compressed = byte_stream.getvalue()
-            self._compressed_size = len(byte_stream.getvalue())
+        gzip_stream.write(b"]")
+        gzip_stream.close()
+        compressed = byte_stream.getvalue()
+        self._compressed_size = len(byte_stream.getvalue())
 
-            return compressed
-
-        except Exception as e:
-            logger.exception("Got an exception", exc_info=e)
-            raise e
+        return compressed

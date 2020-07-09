@@ -4,7 +4,7 @@ resources:
       type: github
       endpoint: github
       name: eossu/azure-pipelines-templates
-      ref: refs/tags/0.2
+      ref: refs/heads/develop
 
 trigger:
   tags:
@@ -41,6 +41,6 @@ stages:
         py38:
           os: linux
 
-  - template: python/stages/sdk-publish.yaml@templates
+  - template: python/stages/publish.yaml@templates
     parameters:
       PypiToken: $(pypi-token)

@@ -31,7 +31,7 @@ parameters:
 
 variables:
   - name: POETRY_CACHE_DIR
-    value: $(Pipeline.Workspace)/.cache/pypoetry/cache
+    value: $(Pipeline.Workspace)/.cache/pypoetry/Cache
   - group: poetry-config
   - group: pypi-credentials
 

@@ -40,8 +40,12 @@ stages:
     parameters:
       PythonVersion: ${{ parameters.PythonVersion }}
       jobs:
+        py36:
+          lock: true
+        py37:
+          lock: true
         py38:
-          os: linux
+          coverage: true
 
   - template: python/stages/publish.yaml@templates
     parameters:

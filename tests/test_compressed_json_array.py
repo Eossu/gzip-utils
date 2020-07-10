@@ -3,14 +3,14 @@ from typing import Union
 
 import pytest
 
-from json_utils import CompressedJsonArray
-from json_utils import __version__
+from gzip_utils import CompressedJsonArray
+from gzip_utils import __version__
 
 
 def test_version():
     """
     This should always be '0.0.0' since we are setting this
-    when we build.
+    when we build in Azure DevOps Pipelines.
     """
     assert __version__ == "0.0.0"
 

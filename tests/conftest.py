@@ -1,6 +1,6 @@
 import pytest
 
-from json_utils import CompressedJsonArray
+from gzip_utils import CompressedJsonArray
 
 
 json_data_str = [

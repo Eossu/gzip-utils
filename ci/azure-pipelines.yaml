@@ -40,8 +40,9 @@ stages:
     parameters:
       PythonVersion: ${{ parameters.PythonVersion }}
       jobs:
-        py38:
-          os: linux
+        py36: null
+        py37: null
+        py38: null
 
   - template: python/stages/publish.yaml@templates
     parameters:

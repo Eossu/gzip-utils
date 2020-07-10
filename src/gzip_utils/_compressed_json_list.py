@@ -9,9 +9,9 @@ from typing import MutableSequence
 from typing import Union
 
 
-class CompressedJsonArray:
+class CompressedJsonList:
     """
-    Compresses a `list` of json strings or dictionaries to an gziped compressed json array of json
+    Compresses a `list` of json strings or dictionaries to an gziped compressed json list of json
     objects.
 
     Arguments:
@@ -42,8 +42,8 @@ class CompressedJsonArray:
             ratio = self.compressed_size / self.uncompressed_size * 100.0
         return ratio
 
-    def get_compressed_json_array(self, json_data: MutableSequence[Union[str, dict]]) -> bytes:
-        """Get a compressed array of json objects
+    def get_compressed_json_list(self, json_data: MutableSequence[Union[str, dict]]) -> bytes:
+        """Get a compressed list of json objects
 
         Args:
             data (Union[List[str], List[dict]]): List of json string or python dictonaries to compress

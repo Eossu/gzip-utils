@@ -82,4 +82,4 @@ def test_compress_all_mixed(comp: CompressedJsonList, mixed_list: MutableSequenc
 def test_raise_value_error(comp: CompressedJsonList):
     data = [3857, 37598]
     with pytest.raises(ValueError):
-        comp.get_compressed_json_list(data)
+        comp.get_compressed_json_list(data)  # type: ignore

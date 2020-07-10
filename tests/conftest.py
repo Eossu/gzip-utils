@@ -1,6 +1,7 @@
-import pytest  # type: ignore
+import pytest
 
 from json_utils import CompressedJsonArray
+
 
 json_data_str = [
     '{"variable": "test this", "data": "where to go next", "integer": 123453, "float": 34.78}',

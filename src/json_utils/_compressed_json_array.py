@@ -2,9 +2,11 @@
 #
 #
 import json
+
 from gzip import GzipFile
 from io import BytesIO
-from typing import MutableSequence, Union
+from typing import MutableSequence
+from typing import Union
 
 
 class CompressedJsonArray:

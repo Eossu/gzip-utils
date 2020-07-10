@@ -44,7 +44,8 @@ stages:
           lock: true
         py37:
           lock: true
-        py38: null
+        py38:
+          coverage: true
 
   - template: python/stages/publish.yaml@templates
     parameters:

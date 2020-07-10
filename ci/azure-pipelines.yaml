@@ -4,7 +4,7 @@ resources:
       type: github
       endpoint: github
       name: eossu/azure-pipelines-templates
-      ref: refs/heads/develop
+      ref: refs/tags/1.0
 
 trigger:
   tags:

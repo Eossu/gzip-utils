@@ -1,9 +1,23 @@
 [tool.poetry]
 name = "gzip-utils"
 version = "0.0.0"
-description = ""
-authors = ["Idar Bergli <idar.bergli@protonmail.com>"]
+description = "Package with diffrent gzip-util's"
 license = "MIT"
+authors = ["Idar Bergli <idar.bergli@protonmail.com>"]
+maintainers = ["Idar Bergli <idar.bergli@protonmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/Eossu/gzip-utils"
+repository = "https://github.com/Eossu/gzip-utils"
+keywords = ["gzip", "utils", "json"]
+classifiers = [
+  "Natural Language :: English",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"

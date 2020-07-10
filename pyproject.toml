@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "json-utils"
+name = "gzip-utils"
 version = "0.0.0"
 description = ""
 authors = ["Idar Bergli <idar.bergli@protonmail.com>"]

@@ -1,8 +1,10 @@
-from typing import MutableSequence, Union
+from typing import MutableSequence
+from typing import Union
 
-import pytest  # type: ignore
+import pytest
 
-from json_utils import CompressedJsonArray, __version__
+from json_utils import CompressedJsonArray
+from json_utils import __version__
 
 
 def test_version():

@@ -14,7 +14,7 @@ except PackageNotFoundError:  # pragma: no cover
     __version__ = "0.0.0"
 
 
-from ._compressed_json_array import CompressedJsonList
+from ._compressed_json_list import CompressedJsonList
 
 
 __all__ = ["CompressedJsonList"]

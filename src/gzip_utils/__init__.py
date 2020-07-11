@@ -15,6 +15,8 @@ except PackageNotFoundError:  # pragma: no cover
 
 
 from ._compressed_json_list import CompressedJsonList
+from ._exceptions import CompressionFull
+from ._exceptions import SingleCompressionOnGoing
 
 
-__all__ = ["CompressedJsonList"]
+__all__ = ["CompressedJsonList", "CompressionFull", "SingleCompressionOnGoing"]

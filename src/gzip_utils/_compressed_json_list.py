@@ -3,13 +3,13 @@
 #
 import json
 
-from gzip import GzipFile, compress
+from gzip import GzipFile
 from io import BytesIO
 from typing import MutableSequence
-from typing import Optional
 from typing import Union
 
-from ._exceptions import CompressionFull, SingleCompressionOnGoing
+from ._exceptions import CompressionFull
+from ._exceptions import SingleCompressionOnGoing
 
 
 class CompressedJsonList:
@@ -22,8 +22,8 @@ class CompressedJsonList:
         max_compressed_size [int]: This is the max compression size needed for one batch.
     """
 
-    def __init__(self, max_compressed_size: int) -> None:
-        self._max_compressed_size = max_compressed_size
+    def __init__(self, compression_limit: int) -> None:
+        self._max_compressed_size: int = compression_limit
         self._uncompressed_size: int = 0
         self._compressed_size: int = 0
 
@@ -36,14 +36,14 @@ class CompressedJsonList:
         self._unzipped_chars = 1 + self._gzip_metadata_size
         self._data_written = 0
 
-    @property
-    def max_compressed_size(self) -> int:
+    def _get_max_compressed_size(self) -> int:
         """ Get the max compressed size """
         return self._max_compressed_size
 
-    @max_compressed_size.setter  # type: ignore
-    def set_max_compressed_size(self, value: int) -> None:
+    def _set_max_compressed_size(self, value: int) -> None:
         self._max_compressed_size = value
+
+    compression_limit = property(_get_max_compressed_size, _set_max_compressed_size)
 
     @property
     def uncompressed_size(self) -> int:
@@ -77,7 +77,7 @@ class CompressedJsonList:
             bytes: The compressed json array
         """
         if before_maxed:
-            self._gzip_stream.write(b']')
+            self._gzip_stream.write(b"]")
 
         compressed = self._byte_stream.getvalue()
         self._compressed_size = len(compressed)
@@ -100,7 +100,7 @@ class CompressedJsonList:
             self._single_compress_started = True
             self._byte_stream = BytesIO()
             self._gzip_stream = GzipFile(mode="wb", fileobj=self._byte_stream)
-            self._gzip_stream.write(b'[')
+            self._gzip_stream.write(b"[")
 
         if not self._compress(data):
             self._gzip_stream.write(b"]")
@@ -157,10 +157,10 @@ class CompressedJsonList:
 
     def _check_compression(self, data_bytes: bytes) -> bool:
         if (self._gzip_stream.size + len(data_bytes) + self._unzipped_chars) > self._max_compressed_size:  # type: ignore
-                self._gzip_stream.flush()
-                self._unzipped_chars = 0 + self._gzip_metadata_size
+            self._gzip_stream.flush()
+            self._unzipped_chars = 0 + self._gzip_metadata_size
 
-        if (self._gzip_stream.size + len(data_bytes)) >= self._max_compressed_size and data_written > 0:  # type: ignore
+        if (self._gzip_stream.size + len(data_bytes)) >= self._max_compressed_size and self._data_written > 0:  # type: ignore
             return False
 
         return True

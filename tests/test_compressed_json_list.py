@@ -124,6 +124,10 @@ def test_raises_compression_full(comp: CompressedJsonList):
         comp.compress(data)
         comp.compress(data)
 
+    compressed = comp.get_data()
+    assert comp.compression_ratio > 0
+    assert type(compressed) == bytes
+
 
 def test_raises_cant_start_array_compress_with_batch_on_going(comp: CompressedJsonList):
     data = '{"variable": "test this", "data": "where to go next", "integer": 123453, "float": 34.78}'

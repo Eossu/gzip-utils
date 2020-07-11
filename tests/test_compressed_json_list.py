@@ -1,4 +1,5 @@
-from typing import MutableMapping, MutableSequence
+from typing import MutableMapping
+from typing import MutableSequence
 from typing import Union
 
 import pytest
@@ -129,7 +130,7 @@ def test_raises_cant_start_array_compress_with_batch_on_going(comp: CompressedJs
     data = '{"variable": "test this", "data": "where to go next", "integer": 123453, "float": 34.78}'
     data_list: MutableSequence[Union[str, dict]] = [
         '{"variable": "test this", "data": "where to go next", "integer": 123453, "float": 34.78}',
-        '{"variable": "test this", "data": "where to go next", "integer": 123453, "float": 34.78}'
+        '{"variable": "test this", "data": "where to go next", "integer": 123453, "float": 34.78}',
     ]
 
     comp.compress(data)

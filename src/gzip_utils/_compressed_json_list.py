@@ -156,11 +156,12 @@ class CompressedJsonList:
         return True
 
     def _check_compression(self, data_bytes: bytes) -> bool:
-        if (self._gzip_stream.size + len(data_bytes) + self._unzipped_chars) > self._max_compressed_size:  # type: ignore
+        stream_size = self._gzip_stream.size  # type: ignore
+        if (stream_size + len(data_bytes) + self._unzipped_chars) > self._max_compressed_size:
             self._gzip_stream.flush()
             self._unzipped_chars = 0 + self._gzip_metadata_size
 
-        if (self._gzip_stream.size + len(data_bytes)) >= self._max_compressed_size and self._data_written > 0:  # type: ignore
+        if (stream_size + len(data_bytes)) >= self._max_compressed_size and self._data_written > 0:
             return False
 
         return True

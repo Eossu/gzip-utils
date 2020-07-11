@@ -1,4 +1,3 @@
-from typing import MutableMapping
 from typing import MutableSequence
 from typing import Union
 

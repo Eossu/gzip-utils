@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2020.07.12] - 2020.07.12
+## [2020.07.13] - 2020.07.13
 
 - Add the posibility to batched compressions instead of adding a full list to the CompressedJsonList.
 

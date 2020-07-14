@@ -42,7 +42,7 @@ def test_compress_str_list(comp: CompressedJsonList, str_list: MutableSequence[U
 
     assert comp.compressed_size == len(data)
     assert comp.compression_ratio > 0
-    assert comp.uncompressed_size == 352
+    assert comp.uncompressed_size == 440
     assert comp.compression_limit == 400
 
 
@@ -60,7 +60,7 @@ def test_compress_dict_list(comp: CompressedJsonList, dict_list: MutableSequence
 
     assert comp.compressed_size == len(data)
     assert comp.compression_ratio > 0
-    assert comp.uncompressed_size == 352
+    assert comp.uncompressed_size == 440
     assert comp.compression_limit == 400
 
 
@@ -78,7 +78,7 @@ def test_compress_mixed_list(comp: CompressedJsonList, mixed_list: MutableSequen
 
     assert comp.compressed_size == len(data)
     assert comp.compression_ratio > 0
-    assert comp.uncompressed_size == 352
+    assert comp.uncompressed_size == 440
     assert comp.compression_limit == 400
 
 

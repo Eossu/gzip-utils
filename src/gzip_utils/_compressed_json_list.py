@@ -123,7 +123,7 @@ class CompressedJsonList:
         self._gzip_stream.write(b"[")
 
         for org_data in json_data:
-            if self._compress(org_data):
+            if self._compress(org_data):  # pragma: no cover
                 json_data.remove(org_data)
 
         self._gzip_stream.write(b"]")

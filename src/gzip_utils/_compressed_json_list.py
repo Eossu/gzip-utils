@@ -125,8 +125,6 @@ class CompressedJsonList:
         for org_data in json_data:
             if self._compress(org_data):
                 json_data.remove(org_data)
-            else:
-                break
 
         self._gzip_stream.write(b"]")
         self._gzip_stream.close()

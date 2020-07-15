@@ -1,4 +1,4 @@
-from typing import MutableSequence
+from typing import List, MutableSequence
 from typing import Union
 
 import pytest
@@ -97,6 +97,18 @@ def test_raise_value_error(comp: CompressedJsonList):
     data = [3857, 37598]
     with pytest.raises(ValueError):
         comp.get_compressed_json_list(data)  # type: ignore
+
+
+def test_compress_list_get_full(comp: CompressedJsonList, str_list: List[str]):
+    
+    comp.compression_limit = 300
+
+    compressed = list()
+    while len(str_list) > 0:
+        data = comp.get_compressed_json_list(str_list)
+        compressed.append(data)
+    
+    assert len(compressed) > 1
 
 
 # ------------------------------------------------------------------------------------------------------------------------------

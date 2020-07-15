@@ -45,12 +45,12 @@ json_data_mixed: MutableSequence[Union[str, dict]] = [
 
 @pytest.fixture
 def str_list() -> MutableSequence[str]:
-    return json_data_str
+    return json_data_str.copy()
 
 
 @pytest.fixture
 def dict_list() -> MutableSequence[dict]:
-    return json_data_dict
+    return json_data_dict.copy()
 
 
 @pytest.fixture

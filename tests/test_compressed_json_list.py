@@ -42,7 +42,7 @@ def test_compress_str_list(comp: CompressedJsonList, str_list: MutableSequence[U
 
     assert comp.compressed_size == len(data)
     assert comp.compression_ratio > 0
-    assert comp.uncompressed_size == 352
+    assert comp.uncompressed_size == 440
     assert comp.compression_limit == 400
 
 
@@ -60,7 +60,7 @@ def test_compress_dict_list(comp: CompressedJsonList, dict_list: MutableSequence
 
     assert comp.compressed_size == len(data)
     assert comp.compression_ratio > 0
-    assert comp.uncompressed_size == 352
+    assert comp.uncompressed_size == 440
     assert comp.compression_limit == 400
 
 
@@ -78,7 +78,7 @@ def test_compress_mixed_list(comp: CompressedJsonList, mixed_list: MutableSequen
 
     assert comp.compressed_size == len(data)
     assert comp.compression_ratio > 0
-    assert comp.uncompressed_size == 352
+    assert comp.uncompressed_size == 440
     assert comp.compression_limit == 400
 
 
@@ -97,6 +97,18 @@ def test_raise_value_error(comp: CompressedJsonList):
     data = [3857, 37598]
     with pytest.raises(ValueError):
         comp.get_compressed_json_list(data)  # type: ignore
+
+
+def test_compress_list_get_full(comp: CompressedJsonList, str_list: MutableSequence[Union[str, dict]]):
+
+    comp.compression_limit = 300
+
+    compressed = list()
+    while len(str_list) > 0:
+        data = comp.get_compressed_json_list(str_list)
+        compressed.append(data)
+
+    assert len(compressed) > 1
 
 
 # ------------------------------------------------------------------------------------------------------------------------------

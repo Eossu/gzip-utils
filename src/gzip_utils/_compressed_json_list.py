@@ -123,7 +123,7 @@ class CompressedJsonList:
         self._gzip_stream.write(b"[")
 
         for org_data in json_data:
-            if self._compress(org_data):
+            if self._compress(org_data):  # pragma: no cover
                 json_data.remove(org_data)
 
         self._gzip_stream.write(b"]")
@@ -156,7 +156,7 @@ class CompressedJsonList:
         return True
 
     def _check_compression(self, data_bytes: bytes) -> bool:
-        stream_size = self._gzip_stream.size  # type: ignore
+        stream_size = self._byte_stream.getbuffer().nbytes
         if (stream_size + len(data_bytes) + self._unzipped_chars) > self._max_compressed_size:
             self._gzip_stream.flush()
             self._unzipped_chars = 0 + self._gzip_metadata_size
